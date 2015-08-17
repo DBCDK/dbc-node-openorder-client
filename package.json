@@ -1,0 +1,41 @@
+{
+  "name": "dbc-node-openorder-client",
+  "version": "0.0.1",
+  "description": "Client for DBC webservice OpenOrder",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register src/__tests__",
+    "build": "npm run cleardest && babel ./src -d dist",
+    "cleardest": "rm -rf ./dist",
+    "lint": "eslint ./src",
+    "lint:checkstyle": "eslint ./src  -o report.xml -f checkstyle",
+    "watch": "npm run cleardest && babel ./src --watch -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DBCDK/dbc-node-openorder-client"
+  },
+  "keywords": [
+    "dbc"
+  ],
+  "author": "DBC A/S",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DBCDK/dbc-node-openorder-client/issues"
+  },
+  "homepage": "https://github.com/DBCDK/dbc-node-openorder-client#readme",
+  "devDependencies": {
+    "babel": "^5.5.6",
+    "babel-eslint": "^3.1.9",
+    "cache-manager": "^0.18.0",
+    "chai": "^2.3.0",
+    "eslint": "^0.21.0",
+    "mocha": "^2.2.4",
+    "mocha-jenkins-reporter": "^0.1.9"
+  },
+  "dependencies": {
+    "es6-promise": "^2.1.1",
+    "request": "^2.60.0",
+    "node-rest-client": "^1.5.1"
+  }
+}
