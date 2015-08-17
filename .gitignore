@@ -1,0 +1,13 @@
+# ============
+# NODE_MODULES
+# ============
+node_modules
+
+
+# ============
+# IDEA
+# ============
+.idea
+*.iml
+
+.DS_Store
