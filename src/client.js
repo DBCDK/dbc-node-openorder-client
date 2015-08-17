@@ -7,18 +7,39 @@ let endpoint = null;
 
 let defaults = {};
 
+/**
+ * Retrieves data from the webservice based on the parameters given
+ *
+ * @param {Object} params Parameters for the request
+ * @return {Promise}
+ */
 function sendOpenOrderRequest(params) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     let options = {
       url: endpoint,
       qs: params
     };
     request(options, function (error, response) {
-      resolve(response);
+      if (response.statusCode === 200) {
+        resolve(response);
+      } else {
+        reject({
+          type: 'Error',
+          statusCode: response.statusCode,
+          statusMessage: response.statusMessage,
+          response: response
+        });
+      }
     });
   });
 }
 
+/**
+ * Constructs the object of parameters for OpenOrder check order policy request.
+ *
+ * @param {Object} values Object with the necessary parameters
+ * @return {Promise}
+ */
 export function checkOrderPolicy(values) {
   const params = {
     action: 'checkOrderPolicy',
@@ -32,6 +53,12 @@ export function checkOrderPolicy(values) {
   return sendOpenOrderRequest(params);
 }
 
+/**
+ * Constructs the object of parameters for OpenOrder place order request.
+ *
+ * @param {Object} values Object with the necessary parameters
+ * @return {Promise}
+ */
 export function placeOrder(values) {
   const params = {
     action: 'placeOrder',
@@ -52,6 +79,14 @@ export const METHODS = {
   placeOrder: placeOrder
 };
 
+/**
+ * Setting the necessary paramerters for the client to be usable.
+ * The endpoint is only set if endpoint is null to allow setting it through
+ * environment variables.
+ *
+ * @param {Object} config Config object with the necessary parameters to use
+ * the webservice
+ */
 export function init(config) {
   if (!endpoint) {
     endpoint = config.endpoint;
