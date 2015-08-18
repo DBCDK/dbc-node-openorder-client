@@ -15,6 +15,8 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
+var _xml2js = require('xml2js');
+
 var endpoint = null;
 
 var defaults = {};
@@ -33,7 +35,11 @@ function sendOpenOrderRequest(params) {
     };
     (0, _request2['default'])(options, function (error, response) {
       if (response.statusCode === 200) {
-        resolve(response);
+        (0, _xml2js.parseString)(response.body, function (err, res) {
+          if (!err) {
+            resolve(res);
+          }
+        });
       } else {
         reject({
           type: 'Error',
@@ -56,6 +62,7 @@ function sendOpenOrderRequest(params) {
 function checkOrderPolicy(values) {
   var params = {
     action: 'checkOrderPolicy',
+    outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
     pid: values.pid,
     groupIdAut: defaults.groupIdAut,
@@ -76,6 +83,7 @@ function checkOrderPolicy(values) {
 function placeOrder(values) {
   var params = {
     action: 'placeOrder',
+    outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
     pid: values.pid,
     userId: values.userId,
