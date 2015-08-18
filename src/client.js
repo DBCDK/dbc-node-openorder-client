@@ -2,6 +2,7 @@
 
 import {Promise} from 'es6-promise';
 import request from 'request';
+import {parseString} from 'xml2js';
 
 let endpoint = null;
 
@@ -21,7 +22,11 @@ function sendOpenOrderRequest(params) {
     };
     request(options, function (error, response) {
       if (response.statusCode === 200) {
-        resolve(response);
+        parseString(response.body, function (err, res) {
+          if (!err) {
+            resolve(res);
+          }
+        });
       } else {
         reject({
           type: 'Error',
@@ -43,6 +48,7 @@ function sendOpenOrderRequest(params) {
 export function checkOrderPolicy(values) {
   const params = {
     action: 'checkOrderPolicy',
+    outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
     pid: values.pid,
     groupIdAut: defaults.groupIdAut,
@@ -62,6 +68,7 @@ export function checkOrderPolicy(values) {
 export function placeOrder(values) {
   const params = {
     action: 'placeOrder',
+    outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
     pid: values.pid,
     userId: values.userId,
