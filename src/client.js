@@ -24,6 +24,7 @@ function sendOpenOrderRequest(params) {
       if (response.statusCode === 200) {
         parseString(response.body, function (err, res) {
           if (!err) {
+            res.pids = params.pid;
             resolve(res);
           }
         });
@@ -50,7 +51,7 @@ export function checkOrderPolicy(values) {
     action: 'checkOrderPolicy',
     outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
-    pid: values.pid,
+    pid: values.pids,
     groupIdAut: defaults.groupIdAut,
     passwordAut: defaults.passwordAut,
     userIdAut: defaults.userIdAut,
@@ -70,7 +71,7 @@ export function placeOrder(values) {
     action: 'placeOrder',
     outputType: 'xml',
     pickUpAgencyId: values.pickUpAgencyId,
-    pid: values.pid,
+    pid: values.pids,
     userId: values.userId,
     groupIdAut: defaults.groupIdAut,
     passwordAut: defaults.passwordAut,
