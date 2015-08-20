@@ -3,15 +3,11 @@
 import {assert} from 'chai';
 import * as OpenOrder from '../client.js';
 
-describe('Dummy test', () => {
-
-  it('makes a dummy test', () => {
-    assert.equal(true, true);
-  });
+describe('Test Open Order checkOrderPolicy', () => {
 
   it('Assert positive result', function(done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+    this.timeout(5000);
+    setTimeout(done, 5000);
     const config = {
 			endpoint: 'https://openorder.addi.dk/2.6.next',
 			user: '',
@@ -33,8 +29,8 @@ describe('Dummy test', () => {
   });
 
   it('Assert positive result two pids', function(done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+    this.timeout(5000);
+    setTimeout(done, 5000);
     const config = {
 			endpoint: 'https://openorder.addi.dk/2.6.next',
 			user: '',
@@ -56,8 +52,8 @@ describe('Dummy test', () => {
   });
 
   it('Assert negative result', function(done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+    this.timeout(5000);
+    setTimeout(done, 5000);
     const config = {
 			endpoint: 'https://openorder.addi.dk/2.6.next',
 			user: '',
