@@ -64,7 +64,7 @@ function checkOrderPolicy(values) {
   var params = {
     action: 'checkOrderPolicy',
     outputType: 'xml',
-    pickUpAgencyId: values.pickUpAgencyId,
+    pickUpAgencyId: values.agencyId,
     pid: values.pids,
     groupIdAut: defaults.groupIdAut,
     passwordAut: defaults.passwordAut,
@@ -85,7 +85,7 @@ function placeOrder(values) {
   var params = {
     action: 'placeOrder',
     outputType: 'xml',
-    pickUpAgencyId: values.pickUpAgencyId,
+    pickUpAgencyId: values.agencyId,
     pid: values.pids,
     userId: values.userId,
     groupIdAut: defaults.groupIdAut,

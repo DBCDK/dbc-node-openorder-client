@@ -50,7 +50,7 @@ export function checkOrderPolicy(values) {
   const params = {
     action: 'checkOrderPolicy',
     outputType: 'xml',
-    pickUpAgencyId: values.pickUpAgencyId,
+    pickUpAgencyId: values.agencyId,
     pid: values.pids,
     groupIdAut: defaults.groupIdAut,
     passwordAut: defaults.passwordAut,
@@ -70,7 +70,7 @@ export function placeOrder(values) {
   const params = {
     action: 'placeOrder',
     outputType: 'xml',
-    pickUpAgencyId: values.pickUpAgencyId,
+    pickUpAgencyId: values.agencyId,
     pid: values.pids,
     userId: values.userId,
     groupIdAut: defaults.groupIdAut,

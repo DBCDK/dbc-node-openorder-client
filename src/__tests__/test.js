@@ -19,7 +19,7 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
-      pickUpAgencyId: '710100'
+      agencyId: '710100'
     });
 
     result.then(function (policyResult) {
@@ -42,7 +42,7 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:29253153', '870970-basis:27986404'],
-      pickUpAgencyId: '710100'
+      agencyId: '710100'
     });
 
     result.then(function (policyResult) {
@@ -65,7 +65,7 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
-      pickUpAgencyId: '772700'
+      agencyId: '772700'
     });
 
     result.then(function (policyResult) {
