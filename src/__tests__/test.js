@@ -5,7 +5,7 @@ import * as OpenOrder from '../client.js';
 
 describe('Test Open Order checkOrderPolicy', () => {
 
-  it('Assert positive result', function(done) {
+  it('Assert a positive result', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
@@ -28,7 +28,7 @@ describe('Test Open Order checkOrderPolicy', () => {
     });
   });
 
-  it('Assert positive result two pids', function(done) {
+  it('Assert a positive result two pids', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
@@ -51,7 +51,7 @@ describe('Test Open Order checkOrderPolicy', () => {
     });
   });
 
-  it('Assert negative result', function(done) {
+  it('Assert a negative result', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
