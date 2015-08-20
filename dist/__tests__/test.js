@@ -8,15 +8,11 @@ var _clientJs = require('../client.js');
 
 var OpenOrder = _interopRequireWildcard(_clientJs);
 
-describe('Dummy test', function () {
+describe('Test Open Order checkOrderPolicy', function () {
 
-  it('makes a dummy test', function () {
-    _chai.assert.equal(true, true);
-  });
-
-  it('Assert positive result', function (done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+  it('Assert a positive result', function (done) {
+    this.timeout(5000);
+    setTimeout(done, 5000);
     var config = {
       endpoint: 'https://openorder.addi.dk/2.6.next',
       user: '',
@@ -37,9 +33,9 @@ describe('Dummy test', function () {
     });
   });
 
-  it('Assert positive result two pids', function (done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+  it('Assert a positive result two pids', function (done) {
+    this.timeout(5000);
+    setTimeout(done, 5000);
     var config = {
       endpoint: 'https://openorder.addi.dk/2.6.next',
       user: '',
@@ -60,9 +56,9 @@ describe('Dummy test', function () {
     });
   });
 
-  it('Assert negative result', function (done) {
-    this.timeout(3000);
-    setTimeout(done, 3000);
+  it('Assert a negative result', function (done) {
+    this.timeout(5000);
+    setTimeout(done, 5000);
     var config = {
       endpoint: 'https://openorder.addi.dk/2.6.next',
       user: '',
