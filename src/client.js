@@ -73,6 +73,7 @@ export function placeOrder(values) {
     pickUpAgencyId: values.agencyId,
     pid: values.pids,
     userId: values.userId,
+    needBeforeDate: values.needBeforeDate,
     groupIdAut: defaults.groupIdAut,
     passwordAut: defaults.passwordAut,
     userIdAut: defaults.userIdAut,
