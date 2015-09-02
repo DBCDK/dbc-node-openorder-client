@@ -71,7 +71,19 @@ function checkOrderPolicy(values) {
     userIdAut: defaults.userIdAut,
     serviceRequester: defaults.serviceRequester
   };
-  return sendOpenOrderRequest(params);
+  var response = new _es6Promise.Promise(function (resolve) {
+    var res = {
+      checkOrderPolicyResponse: {
+        orderPossible: ['true']
+      },
+      pids: values.pids
+    };
+    resolve(res);
+  });
+  if (values.loggedIn === true) {
+    response = sendOpenOrderRequest(params);
+  }
+  return response;
 }
 
 /**

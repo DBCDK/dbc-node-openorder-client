@@ -57,7 +57,19 @@ export function checkOrderPolicy(values) {
     userIdAut: defaults.userIdAut,
     serviceRequester: defaults.serviceRequester
   };
-  return sendOpenOrderRequest(params);
+  let response = new Promise((resolve) => {
+    const res = {
+      checkOrderPolicyResponse: {
+        orderPossible: ['true']
+      },
+      pids: values.pids
+    };
+    resolve(res);
+  });
+  if (values.loggedIn === true) {
+    response = sendOpenOrderRequest(params);
+  }
+  return response;
 }
 
 /**

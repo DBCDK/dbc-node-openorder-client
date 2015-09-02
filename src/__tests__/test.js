@@ -19,7 +19,8 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
-      agencyId: '710100'
+      agencyId: '710100',
+      loggedIn: true
     });
 
     result.then(function (policyResult) {
@@ -42,7 +43,8 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:29253153', '870970-basis:27986404'],
-      agencyId: '710100'
+      agencyId: '710100',
+      loggedIn: true
     });
 
     result.then(function (policyResult) {
@@ -65,7 +67,8 @@ describe('Test Open Order checkOrderPolicy', () => {
     OpenOrder.init(config);
     let result = OpenOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
-      agencyId: '772700'
+      agencyId: '772700',
+      loggedIn: true
     });
 
     result.then(function (policyResult) {
@@ -81,10 +84,10 @@ describe('Test Open Order checkOrderPolicy', () => {
   development purposes.
   */
 
-/*
+
 describe('Test Open Order placeOrder', () => {
 
-  it('Assert a positive result on placeOrder request', function(done) {
+  /*it('Assert a positive result on placeOrder request', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
@@ -129,11 +132,10 @@ describe('Test Open Order placeOrder', () => {
       needBeforeDate: '2016-02-06T00:00:00.000+01:00'
     });
     result.then(function (orderResult) {
-      console.log(orderResult);
       assert.notProperty(orderResult.placeOrderResponse, 'orderPlaced');
       assert.property(orderResult.placeOrderResponse, 'orderNotPlaced');
       done();
     });
-  });
+  });*/
 
-});*/
+});
