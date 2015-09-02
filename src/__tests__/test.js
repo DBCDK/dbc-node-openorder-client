@@ -87,7 +87,7 @@ describe('Test Open Order checkOrderPolicy', () => {
 
 describe('Test Open Order placeOrder', () => {
 
-  it('Assert a positive result on placeOrder request', function(done) {
+  /*it('Assert a positive result on placeOrder request', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
@@ -136,6 +136,6 @@ describe('Test Open Order placeOrder', () => {
       assert.property(orderResult.placeOrderResponse, 'orderNotPlaced');
       done();
     });
-  });
+  });*/
 
 });
