@@ -90,7 +90,7 @@ describe('Test Open Order checkOrderPolicy', function () {
 
 describe('Test Open Order placeOrder', function () {
 
-  /*it('Assert a positive result on placeOrder request', function(done) {
+  /* it('Assert a positive result on placeOrder request', function(done) {
     this.timeout(5000);
     setTimeout(done, 5000);
     const config = {
@@ -136,6 +136,6 @@ describe('Test Open Order placeOrder', function () {
       assert.property(orderResult.placeOrderResponse, 'orderNotPlaced');
       done();
     });
-  });*/
+  }); */
 
 });
