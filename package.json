@@ -1,6 +1,6 @@
 {
   "name": "dbc-node-openorder-client",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Client for DBC webservice OpenOrder",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "dbc"
   ],
   "author": "dbcdk",
-  "license": "GNU GPL v3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/DBCDK/dbc-node-openorder-client/issues"
   },
