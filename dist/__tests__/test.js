@@ -1,12 +1,12 @@
 'use strict';
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _chai = require('chai');
 
 var _clientJs = require('../client.js');
 
-var OpenOrder = _interopRequireWildcard(_clientJs);
+var _clientJs2 = _interopRequireDefault(_clientJs);
 
 describe('Test Open Order checkOrderPolicy', function () {
 
@@ -21,8 +21,8 @@ describe('Test Open Order checkOrderPolicy', function () {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    var result = OpenOrder.checkOrderPolicy({
+    var openOrder = (0, _clientJs2['default'])(config);
+    var result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
       agencyId: '710100',
       loggedIn: true
@@ -45,8 +45,8 @@ describe('Test Open Order checkOrderPolicy', function () {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    var result = OpenOrder.checkOrderPolicy({
+    var openOrder = (0, _clientJs2['default'])(config);
+    var result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:29253153', '870970-basis:27986404'],
       agencyId: '710100',
       loggedIn: true
@@ -69,8 +69,8 @@ describe('Test Open Order checkOrderPolicy', function () {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    var result = OpenOrder.checkOrderPolicy({
+    var openOrder = (0, _clientJs2['default'])(config);
+    var result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
       agencyId: '772700',
       loggedIn: true
@@ -101,7 +101,7 @@ describe('Test Open Order placeOrder', function () {
       serviceRequester: 'PallesGavebod',
       orderSystem: 'pallesgavebod'
     };
-     OpenOrder.init(config);
+     OpenOrder(config);
     let result = OpenOrder.placeOrder({
       pids: ['870970-basis:28183488'],
       agencyId: '710100',
@@ -124,7 +124,7 @@ describe('Test Open Order placeOrder', function () {
       serviceRequester: 'PallesGavebod',
       orderSystem: 'pallesgavebod'
     };
-     OpenOrder.init(config);
+     OpenOrder(config);
     let result = OpenOrder.placeOrder({
       pids: ['870970-basis:28183481'],
       agencyId: '710100',

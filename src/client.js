@@ -1,12 +1,7 @@
 'use strict';
 
-import {Promise} from 'es6-promise';
 import request from 'request';
 import {parseString} from 'xml2js';
-
-let endpoint = null;
-
-let defaults = {};
 
 /**
  * Retrieves data from the webservice based on the parameters given
@@ -14,7 +9,7 @@ let defaults = {};
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
-function sendOpenOrderRequest(params) {
+function sendOpenOrderRequest(endpoint, params) {
   return new Promise((resolve, reject) => {
     let options = {
       url: endpoint,
@@ -46,7 +41,7 @@ function sendOpenOrderRequest(params) {
  * @param {Object} values Object with the necessary parameters
  * @return {Promise}
  */
-export function checkOrderPolicy(values) {
+export function checkOrderPolicy(endpoint, defaults, values) {
   const params = {
     action: 'checkOrderPolicy',
     outputType: 'xml',
@@ -67,7 +62,7 @@ export function checkOrderPolicy(values) {
     resolve(res);
   });
   if (values.loggedIn === true) {
-    response = sendOpenOrderRequest(params);
+    response = sendOpenOrderRequest(endpoint, params);
   }
   return response;
 }
@@ -78,7 +73,7 @@ export function checkOrderPolicy(values) {
  * @param {Object} values Object with the necessary parameters
  * @return {Promise}
  */
-export function placeOrder(values) {
+export function placeOrder(endpoint, defaults, values) {
   const params = {
     action: 'placeOrder',
     outputType: 'xml',
@@ -95,11 +90,6 @@ export function placeOrder(values) {
   return sendOpenOrderRequest(params);
 }
 
-export const METHODS = {
-  checkOrderPolicy: checkOrderPolicy,
-  placeOrder: placeOrder
-};
-
 /**
  * Setting the necessary paramerters for the client to be usable.
  * The endpoint is only set if endpoint is null to allow setting it through
@@ -108,12 +98,9 @@ export const METHODS = {
  * @param {Object} config Config object with the necessary parameters to use
  * the webservice
  */
-export function init(config) {
-  if (!endpoint) {
-    endpoint = config.endpoint;
-  }
+export default function OpenOrderClient(config) {
 
-  defaults = {
+  const defaults = {
     groupIdAut: config.group,
     passwordAut: config.password,
     userIdAut: config.user,
@@ -121,5 +108,8 @@ export function init(config) {
     orderSystem: config.orderSystem
   };
 
-  return METHODS;
+  return {
+    checkOrderPolicy: checkOrderPolicy.bind(null, config.endpoint, defaults),
+    placeOrder: placeOrder.bind(null, config.endpoint, defaults)
+  };
 }

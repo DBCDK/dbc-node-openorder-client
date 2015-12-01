@@ -5,11 +5,9 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.checkOrderPolicy = checkOrderPolicy;
 exports.placeOrder = placeOrder;
-exports.init = init;
+exports['default'] = OpenOrderClient;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _es6Promise = require('es6-promise');
 
 var _request = require('request');
 
@@ -17,18 +15,14 @@ var _request2 = _interopRequireDefault(_request);
 
 var _xml2js = require('xml2js');
 
-var endpoint = null;
-
-var defaults = {};
-
 /**
  * Retrieves data from the webservice based on the parameters given
  *
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
-function sendOpenOrderRequest(params) {
-  return new _es6Promise.Promise(function (resolve, reject) {
+function sendOpenOrderRequest(endpoint, params) {
+  return new Promise(function (resolve, reject) {
     var options = {
       url: endpoint,
       qs: params
@@ -60,7 +54,7 @@ function sendOpenOrderRequest(params) {
  * @return {Promise}
  */
 
-function checkOrderPolicy(values) {
+function checkOrderPolicy(endpoint, defaults, values) {
   var params = {
     action: 'checkOrderPolicy',
     outputType: 'xml',
@@ -71,7 +65,7 @@ function checkOrderPolicy(values) {
     userIdAut: defaults.userIdAut,
     serviceRequester: defaults.serviceRequester
   };
-  var response = new _es6Promise.Promise(function (resolve) {
+  var response = new Promise(function (resolve) {
     var res = {
       checkOrderPolicyResponse: {
         orderPossible: ['true']
@@ -81,7 +75,7 @@ function checkOrderPolicy(values) {
     resolve(res);
   });
   if (values.loggedIn === true) {
-    response = sendOpenOrderRequest(params);
+    response = sendOpenOrderRequest(endpoint, params);
   }
   return response;
 }
@@ -93,7 +87,7 @@ function checkOrderPolicy(values) {
  * @return {Promise}
  */
 
-function placeOrder(values) {
+function placeOrder(endpoint, defaults, values) {
   var params = {
     action: 'placeOrder',
     outputType: 'xml',
@@ -110,12 +104,6 @@ function placeOrder(values) {
   return sendOpenOrderRequest(params);
 }
 
-var METHODS = {
-  checkOrderPolicy: checkOrderPolicy,
-  placeOrder: placeOrder
-};
-
-exports.METHODS = METHODS;
 /**
  * Setting the necessary paramerters for the client to be usable.
  * The endpoint is only set if endpoint is null to allow setting it through
@@ -125,12 +113,9 @@ exports.METHODS = METHODS;
  * the webservice
  */
 
-function init(config) {
-  if (!endpoint) {
-    endpoint = config.endpoint;
-  }
+function OpenOrderClient(config) {
 
-  defaults = {
+  var defaults = {
     groupIdAut: config.group,
     passwordAut: config.password,
     userIdAut: config.user,
@@ -138,5 +123,8 @@ function init(config) {
     orderSystem: config.orderSystem
   };
 
-  return METHODS;
+  return {
+    checkOrderPolicy: checkOrderPolicy.bind(null, config.endpoint, defaults),
+    placeOrder: placeOrder.bind(null, config.endpoint, defaults)
+  };
 }
