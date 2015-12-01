@@ -1,7 +1,7 @@
 'use strict';
 
 import {assert} from 'chai';
-import * as OpenOrder from '../client.js';
+import OpenOrder from '../client.js';
 
 describe('Test Open Order checkOrderPolicy', () => {
 
@@ -16,8 +16,8 @@ describe('Test Open Order checkOrderPolicy', () => {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    let result = OpenOrder.checkOrderPolicy({
+    const openOrder = OpenOrder(config);
+    let result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
       agencyId: '710100',
       loggedIn: true
@@ -40,8 +40,8 @@ describe('Test Open Order checkOrderPolicy', () => {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    let result = OpenOrder.checkOrderPolicy({
+    const openOrder = OpenOrder(config);
+    let result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:29253153', '870970-basis:27986404'],
       agencyId: '710100',
       loggedIn: true
@@ -64,8 +64,8 @@ describe('Test Open Order checkOrderPolicy', () => {
       serviceRequester: 'PallesGavebod'
     };
 
-    OpenOrder.init(config);
-    let result = OpenOrder.checkOrderPolicy({
+    const openOrder = OpenOrder(config);
+    let result = openOrder.checkOrderPolicy({
       pids: ['870970-basis:28183488'],
       agencyId: '772700',
       loggedIn: true
@@ -99,7 +99,7 @@ describe('Test Open Order placeOrder', () => {
       orderSystem: 'pallesgavebod'
     };
 
-    OpenOrder.init(config);
+    OpenOrder(config);
     let result = OpenOrder.placeOrder({
       pids: ['870970-basis:28183488'],
       agencyId: '710100',
@@ -124,7 +124,7 @@ describe('Test Open Order placeOrder', () => {
       orderSystem: 'pallesgavebod'
     };
 
-    OpenOrder.init(config);
+    OpenOrder(config);
     let result = OpenOrder.placeOrder({
       pids: ['870970-basis:28183481'],
       agencyId: '710100',
