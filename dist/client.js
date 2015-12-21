@@ -101,7 +101,7 @@ function placeOrder(endpoint, defaults, values) {
     serviceRequester: defaults.serviceRequester,
     orderSystem: defaults.orderSystem
   };
-  return sendOpenOrderRequest(params);
+  return sendOpenOrderRequest(endpoint, params);
 }
 
 /**
