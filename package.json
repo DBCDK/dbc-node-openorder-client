@@ -1,6 +1,6 @@
 {
   "name": "dbc-node-openorder-client",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Client for DBC webservice OpenOrder",
   "main": "index.js",
   "scripts": {
