@@ -9,29 +9,31 @@ import {parseString} from 'xml2js';
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
-function sendOpenOrderRequest(endpoint, params) {
+const maxRetries = 5;
+function sendOpenOrderRequest(endpoint, params, retries = 0) {
   return new Promise((resolve, reject) => {
     let options = {
       url: endpoint,
       qs: params
     };
     request(options, function (error, response) {
-      if (response.statusCode === 200) {
-        parseString(response.body, function (err, res) {
-          if (!err) {
-            res.pids = params.pid;
-            resolve(res);
-          }
-        });
-      } else {
-        reject({
-          type: 'Error',
-          statusCode: response.statusCode,
-          statusMessage: response.statusMessage,
-          response: response
-        });
+      if (error || !response) {
+        return reject(error);
       }
+
+      const resp = JSON.parse(response.body);
+      if (resp.checkOrderPolicyResponse && resp.checkOrderPolicyResponse.checkOrderPolicyError && resp.checkOrderPolicyResponse.checkOrderPolicyError.$ === 'service_unavailable') {
+        reject('service_unavailable');
+      }
+
+      return resolve(resp);
     });
+  }).catch((err) => {
+    if (err === 'service_unavailable' && retries <= maxRetries) {
+      return sendOpenOrderRequest(endpoint, params, retries + 1);
+    }
+
+    return Promise.reject(err);
   });
 }
 
@@ -44,7 +46,7 @@ function sendOpenOrderRequest(endpoint, params) {
 export function checkOrderPolicy(endpoint, defaults, values) {
   const params = {
     action: 'checkOrderPolicy',
-    outputType: 'xml',
+    outputType: 'json',
     pickUpAgencyId: values.agencyId,
     pid: values.pids,
     groupIdAut: defaults.groupIdAut,
@@ -52,18 +54,18 @@ export function checkOrderPolicy(endpoint, defaults, values) {
     userIdAut: defaults.userIdAut,
     serviceRequester: defaults.serviceRequester
   };
-  let response = new Promise((resolve) => {
-    const res = {
-      checkOrderPolicyResponse: {
-        orderPossible: ['true']
-      },
-      pids: values.pids
-    };
-    resolve(res);
+
+  let response = Promise.resolve({
+    checkOrderPolicyResponse: {
+      orderPossible: ['true']
+    },
+    pids: values.pids
   });
+
   if (values.loggedIn === true) {
     response = sendOpenOrderRequest(endpoint, params);
   }
+
   return response;
 }
 
@@ -76,7 +78,7 @@ export function checkOrderPolicy(endpoint, defaults, values) {
 export function placeOrder(endpoint, defaults, values) {
   const params = {
     action: 'placeOrder',
-    outputType: 'xml',
+    outputType: 'json',
     pickUpAgencyId: values.agencyId,
     pid: values.pids,
     userId: values.userId,
