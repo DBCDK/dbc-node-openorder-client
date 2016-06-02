@@ -1,7 +1,6 @@
 'use strict';
 
 import request from 'request';
-import {parseString} from 'xml2js';
 
 /**
  * Retrieves data from the webservice based on the parameters given
