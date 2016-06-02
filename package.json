@@ -1,6 +1,6 @@
 {
   "name": "dbc-node-openorder-client",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "Client for DBC webservice OpenOrder",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,6 @@
     "mocha-jenkins-reporter": "^0.1.9"
   },
   "dependencies": {
-    "request": "^2.60.0",
-    "xml2js": "^0.4.10"
+    "request": "^2.60.0"
   }
 }

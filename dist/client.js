@@ -13,37 +13,39 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
-var _xml2js = require('xml2js');
-
 /**
  * Retrieves data from the webservice based on the parameters given
  *
  * @param {Object} params Parameters for the request
  * @return {Promise}
  */
+var maxRetries = 5;
 function sendOpenOrderRequest(endpoint, params) {
+  var retries = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
   return new Promise(function (resolve, reject) {
     var options = {
       url: endpoint,
       qs: params
     };
     (0, _request2['default'])(options, function (error, response) {
-      if (response.statusCode === 200) {
-        (0, _xml2js.parseString)(response.body, function (err, res) {
-          if (!err) {
-            res.pids = params.pid;
-            resolve(res);
-          }
-        });
-      } else {
-        reject({
-          type: 'Error',
-          statusCode: response.statusCode,
-          statusMessage: response.statusMessage,
-          response: response
-        });
+      if (error || !response) {
+        return reject(error);
       }
+
+      var resp = JSON.parse(response.body);
+      if (resp.checkOrderPolicyResponse && resp.checkOrderPolicyResponse.checkOrderPolicyError && resp.checkOrderPolicyResponse.checkOrderPolicyError.$ === 'service_unavailable') {
+        reject('service_unavailable');
+      }
+
+      return resolve(resp);
     });
+  })['catch'](function (err) {
+    if (err === 'service_unavailable' && retries <= maxRetries) {
+      return sendOpenOrderRequest(endpoint, params, retries + 1);
+    }
+
+    return Promise.reject(err);
   });
 }
 
@@ -57,7 +59,7 @@ function sendOpenOrderRequest(endpoint, params) {
 function checkOrderPolicy(endpoint, defaults, values) {
   var params = {
     action: 'checkOrderPolicy',
-    outputType: 'xml',
+    outputType: 'json',
     pickUpAgencyId: values.agencyId,
     pid: values.pids,
     groupIdAut: defaults.groupIdAut,
@@ -65,18 +67,18 @@ function checkOrderPolicy(endpoint, defaults, values) {
     userIdAut: defaults.userIdAut,
     serviceRequester: defaults.serviceRequester
   };
-  var response = new Promise(function (resolve) {
-    var res = {
-      checkOrderPolicyResponse: {
-        orderPossible: ['true']
-      },
-      pids: values.pids
-    };
-    resolve(res);
+
+  var response = Promise.resolve({
+    checkOrderPolicyResponse: {
+      orderPossible: ['true']
+    },
+    pids: values.pids
   });
+
   if (values.loggedIn === true) {
     response = sendOpenOrderRequest(endpoint, params);
   }
+
   return response;
 }
 
@@ -90,7 +92,7 @@ function checkOrderPolicy(endpoint, defaults, values) {
 function placeOrder(endpoint, defaults, values) {
   var params = {
     action: 'placeOrder',
-    outputType: 'xml',
+    outputType: 'json',
     pickUpAgencyId: values.agencyId,
     pid: values.pids,
     userId: values.userId,
